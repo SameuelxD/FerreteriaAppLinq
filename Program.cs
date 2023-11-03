@@ -22,7 +22,7 @@ internal class Program
             Console.WriteLine(" 8. Closed Program.");
             Console.WriteLine(" ");
 
-            Console.Write("Ingrese opción: ");
+            Console.Write("Enter Option: ");
             if (int.TryParse(Console.ReadLine(), out option))
             {
                 ProductExtension PrintListProducts = new ProductExtension();

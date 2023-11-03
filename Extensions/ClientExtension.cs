@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ConsoleTables;
 using FerreteriaLinq.Entities;
 
 namespace FerreteriaLinq.Extensions
@@ -15,8 +16,10 @@ namespace FerreteriaLinq.Extensions
         public void CustomerData()
         {
             Console.Clear();
-            Console.WriteLine("--------------------  CUSTOMER DATA -------------------- ");
-            ListClients.ForEach(client => Console.WriteLine($"ClientId: {client.ClientId} ClientName: {client.ClientName} ClientEmail: {client.ClientEmail} "));
+            var table = new ConsoleTable("ClientId","ClientName","ClientEmail");
+            ListClients.ForEach(client => table.AddRow(client.ClientId,client.ClientName,client.ClientEmail));
+            Console.WriteLine("|-------------------CUSTOMER DATA-------------------|");
+            table.Write(Format.Alternative);
             Console.ReadLine();
         } 
     }

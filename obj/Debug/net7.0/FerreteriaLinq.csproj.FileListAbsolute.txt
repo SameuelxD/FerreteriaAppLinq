@@ -54,3 +54,6 @@ C:\Users\corvus\Documents\FerreteriaLinq\bin\Debug\net7.0\FerreteriaLinq.dll
 C:\Users\corvus\Documents\FerreteriaLinq\bin\Debug\net7.0\FerreteriaLinq.pdb
 C:\Users\corvus\Documents\FerreteriaLinq\obj\Debug\net7.0\FerreteriaLinq.genruntimeconfig.cache
 C:\Users\corvus\Documents\FerreteriaLinq\obj\Debug\net7.0\ref\FerreteriaLinq.dll
+C:\Users\APM02-48\Documents\FerreteriaLinq\bin\Debug\net7.0\ConsoleTables.dll
+C:\Users\APM02-48\Documents\FerreteriaLinq\obj\Debug\net7.0\FerreteriaLinq.csproj.AssemblyReference.cache
+C:\Users\APM02-48\Documents\FerreteriaLinq\obj\Debug\net7.0\FerreteriaLinq.csproj.CopyComplete

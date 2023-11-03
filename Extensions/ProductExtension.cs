@@ -1,4 +1,5 @@
 using System.Numerics;
+using ConsoleTables;
 using FerreteriaLinq.Entities;
 
 namespace FerreteriaLinq.Extensions
@@ -22,24 +23,30 @@ namespace FerreteriaLinq.Extensions
         public void ProductsInventory()
         {
             Console.Clear();
-            Console.WriteLine("--------------------  PRODUCTS INVENTORY -------------------- ");
-            ListProducts.ForEach(product => Console.WriteLine($"ProductId: {product.ProductId} ProductName: {product.ProductName}  PriceUnit: {product.PriceUnit} Quantity: {product.Quantity} StockMin: {product.StockMin} StockMax: {product.StockMax} "));
+            Console.WriteLine("|------------------------- PRODUCTS INVENTORY -----------------------|");
+            var table = new ConsoleTable("ProductId","ProductName","PriceUnit","Quantity","StockMin","StockMax");
+            ListProducts.ForEach(product => table.AddRow(product.ProductId,product.ProductName,product.PriceUnit,product.Quantity,product.StockMin,product.StockMax));  
+            table.Write(Format.Alternative);
             Console.ReadLine();
         }
         public void ProductsStockMin()
         {
             Console.Clear();
             var ListStockMin = ListProducts.Where(product => product.Quantity >= 0 && product.Quantity <= product.StockMin).ToList<Product>();
-            Console.WriteLine(" --------------------  PRODUCTS STOCKMIN -------------------- ");
-            ListStockMin.ForEach(product => Console.WriteLine($"ProductId: {product.ProductId}  ProductName: {product.ProductName}  Quantity: {product.Quantity}  StockMin: {product.StockMin}  StockMax: {product.StockMax} "));
+            Console.WriteLine("|------------------- PRODUCTS STOCKMIN ------------------|");
+            var table = new ConsoleTable("ProductId","ProductName","Quantity","StockMin","StockMax");
+            ListStockMin.ForEach(product => table.AddRow(product.ProductId,product.ProductName,product.Quantity,product.StockMin,product.StockMax));
+            table.Write(Format.Alternative);
             Console.ReadLine();
         }
         public void PurchasesProductsRequired()
         {
             Console.Clear();
             var ListProductsRequired = ListProducts.Where(product => product.Quantity >= 0 && product.Quantity < product.StockMin && product.Quantity < product.StockMax).ToList<Product>();
-            Console.WriteLine("--------------------  PURCHASES PRODUCTS REQUIRED --------------------  ");
-            ListProductsRequired.ForEach(product => Console.WriteLine($"ProductId: {product.ProductId} ProductName: {product.ProductName} Quantity: {product.Quantity} StockMin: {product.StockMin} StockMax: {product.StockMax} UnitsRequired: {product.StockMin - product.Quantity} AvailableUnitsAdd: {product.StockMax - product.Quantity}"));
+            Console.WriteLine("|-------------------------------- PURCHASES PRODUCTS REQUIRED --------------------------------|");
+            var table = new ConsoleTable("ProductId","ProductName","Quantity","StockMin","StockMax","UnitsRequired","AvailableUnitsAdd");
+            ListProductsRequired.ForEach(product => table.AddRow(product.ProductId,product.ProductName,product.Quantity,product.StockMin,product.StockMax,product.StockMin-product.Quantity,product.StockMax-product.Quantity));
+            table.Write(Format.Alternative);
             Console.ReadLine();
         }
         public void AddProducts()
@@ -87,18 +94,20 @@ namespace FerreteriaLinq.Extensions
         {
             Console.Clear();
             double TotalInventoryValue = 0; // Inicializa la variable
-            Console.WriteLine("--------------------  TOTAL INVENTORY VALUE -------------------- ");
-
+            var table = new ConsoleTable("ProductId","ProductName","PriceUnit","Quantity","StockMin","StockMax","ProductInventoryValue");
+            var tableTotal = new ConsoleTable("TotalInventoryValue");
             foreach (var product in ListProducts)
             {
                 double ProductInventoryValue = product.Quantity * product.PriceUnit;
-
-                Console.WriteLine($"ProductId: {product.ProductId} ProductName: {product.ProductName} PriceUnit: {product.PriceUnit} Quantity: {product.Quantity} StockMin: {product.StockMin} StockMax: {product.StockMax} ProductInventoryValue: {ProductInventoryValue}");
-
+                table.AddRow(product.ProductId,product.ProductName,product.PriceUnit,product.Quantity,product.StockMin,product.StockMax,ProductInventoryValue);
                 TotalInventoryValue += ProductInventoryValue; // Acumula el valor
             }
-
-            Console.WriteLine($"TotalInventoryValue: {TotalInventoryValue}");
+            Console.WriteLine(" |----------------------------------  PRODUCT INVENTORY VALUE ---------------------------------| ");
+            table.Write(Format.Alternative);
+            Console.ReadLine();
+            tableTotal.AddRow(TotalInventoryValue);
+            Console.WriteLine("|TOTAL INVENTORY VALUE|");
+            tableTotal.Write(Format.Alternative);
             Console.ReadLine();
         }
 

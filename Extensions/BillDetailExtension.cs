@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ConsoleTables;
 using FerreteriaLinq.Entities;
 
 namespace FerreteriaLinq.Extensions
@@ -14,7 +15,13 @@ namespace FerreteriaLinq.Extensions
             new BillDetail(){BillDetailId=11,BillNumber=8,ProductIds=new List<int> {123,124},QuantitySolds=new List<int> {2,8},ValueSolds=new List<double> {1000,1600}}
         };
         public void ProductsSoldInvoice()
-        {
+        {    
+            var tableInvoiceNumber = new ConsoleTable("BillNumber");
+            foreach(var invoiceNumber in ListBillsDetails){
+                tableInvoiceNumber.AddRow(invoiceNumber.BillNumber);
+            }
+            Console.WriteLine("INVOICE NUMBER");        
+            tableInvoiceNumber.Write(Format.Alternative);
             Console.WriteLine("Enter the Invoice Number to Search: ");
             int billNumber;
             
@@ -30,7 +37,7 @@ namespace FerreteriaLinq.Extensions
                 }
                 else
                 {
-                    Console.WriteLine("--------------------  PRODUCTS SOLD INVOICE -------------------- ");
+                    Console.WriteLine("|---------------PRODUCTS SOLD INVOICE---------------|");
                     foreach (var billDetail in relevantBillDetails)
                     {
                         Console.WriteLine($"BillDetailId: {billDetail.BillDetailId}, BillNumber: {billDetail.BillNumber}");
